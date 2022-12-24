@@ -8,7 +8,7 @@ export class PrismaService extends PrismaClient {
       await app.close();
     });
   }
-  unhex(s) {
+  unhex(s: string) {
     const arr = [];
     for (let i = 0; i < s.length; i += 2) {
       const c = s.substr(i, 2);

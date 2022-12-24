@@ -2,7 +2,6 @@ import { Body, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateStatusDto } from './dto/create-status.dto';
 import { UpdateStatusDto } from './dto/update-status.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { status_name } from '@prisma/client';
 
 @Injectable()
 export class StatusService {
@@ -10,7 +9,7 @@ export class StatusService {
   async create(@Body() createStatusDto: CreateStatusDto) {
     try {
       const status = await this.prisma.status.create({ data: createStatusDto });
-      const id = this.prisma.hex(status.id);
+      const id: string = this.prisma.hex(status.id);
       return { ...status, id };
     } catch (error) {
       throw new NotFoundException('invalis status');
@@ -27,7 +26,7 @@ export class StatusService {
   }
 
   async findOne(id: string) {
-    const idUnHexed = this.prisma.unhex(id);
+    const idUnHexed: Buffer = this.prisma.unhex(id);
     const status = await this.prisma.status.findFirst({
       where: { id: idUnHexed },
     });
@@ -37,7 +36,7 @@ export class StatusService {
   }
 
   async update(id: string, updateStatusDto: UpdateStatusDto) {
-    const idUnHexed = this.prisma.unhex(id);
+    const idUnHexed: Buffer = this.prisma.unhex(id);
     const status = await this.prisma.status.update({
       where: { id: idUnHexed },
       data: updateStatusDto,
@@ -48,7 +47,7 @@ export class StatusService {
   }
 
   async remove(id: string) {
-    const idUnHexed = this.prisma.unhex(id);
+    const idUnHexed: Buffer = this.prisma.unhex(id);
     const status = await this.prisma.status.delete({
       where: { id: idUnHexed },
     });
