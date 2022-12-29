@@ -53,6 +53,6 @@ export class StatusService {
     });
     if (!status)
       throw new NotFoundException(`status with id: ${id} does not exist`);
-    return { ...status, id };
+    return { message: `status ${status.name} was deleted` };
   }
 }
